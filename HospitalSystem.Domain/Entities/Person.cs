@@ -30,13 +30,15 @@ namespace HospitalSystem.Domain.Entities
         [Column(TypeName = "nvarchar(200)")]
         public string? Address { get; set; }
 
-        // [PersonalData]
-        // [Column(TypeName = "nvarchar(3)")]
-        // public BloodTypeClass? BloodType { get; set; }
+        [PersonalData]
+        [Column("Blood Type")]
+        public BloodType? BloodType { get; set; }
 
-
-
+        [PersonalData]
         public Gender Gender {  get; set; }
+
+        [Column("User role")] 
+        public UserType UserType { get; set; }
 
         // public UserType UserType { get; set; } CRUD operations will be more complex
 
