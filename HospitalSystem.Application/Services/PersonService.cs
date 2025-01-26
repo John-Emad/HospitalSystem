@@ -1,5 +1,5 @@
 ﻿using HospitalSystem.Application.Interfaces;
-using HospitalSystem.Domain.Entities;
+using HospitalSystem.Domain.Entities.persons;
 using HospitalSystem.Domain.Interfaces;
 using System;
 using System.Collections.Generic;

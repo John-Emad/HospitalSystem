@@ -1,4 +1,4 @@
-﻿using HospitalSystem.Domain.Entities;
+﻿using HospitalSystem.Domain.Entities.persons;
 using HospitalSystem.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;

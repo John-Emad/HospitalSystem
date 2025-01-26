@@ -1,4 +1,4 @@
-﻿using HospitalSystem.Domain.Entities;
+﻿using HospitalSystem.Domain.Entities.persons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
