@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HospitalSystem.Domain.Entities
@@ -35,7 +36,7 @@ namespace HospitalSystem.Domain.Entities
         [Column("Emergency Number", TypeName = "nvarchar(50)")]
         public string EmergencyNumber { get; set; }
 
-        public List<Department> Departments { get; set; }
+        public virtual ICollection<Department> Departments { get; set; } = new List<Department>();
 
     }
 }

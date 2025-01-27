@@ -11,9 +11,11 @@ namespace HospitalSystem.Domain.Entities.People
 {
     public class Doctor:Person
     {
+        [Key]
+        public int Id { get; set; }
+
         [Required]
-        [Column("Medical speciality",TypeName = "nvarchar(100)")]
-        public required string MedicalSpeciality { get; set; }
+        public int MedicalSpecialityId { get; set; }
 
         public required string Schedule { get; set; }
         [DataType(DataType.Currency)]
@@ -24,7 +26,11 @@ namespace HospitalSystem.Domain.Entities.People
 
         public required decimal ImpatientVisitPrice { get; set; }
 
+        public virtual MedicalSpeciality MedicalSpeciality { get; set; }
         public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
+        public virtual ICollection<Operation> Operations { get; set; } = new List<Operation>();
+        public virtual ICollection<Treatment> Treatments { get; set; } = new List<Treatment>();
+
 
     }
 }

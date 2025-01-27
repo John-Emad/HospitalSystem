@@ -26,6 +26,9 @@ namespace HospitalSystem.Domain.Entities.People
         public string EmergencyContact { get; set; }
 
         public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
+        public virtual ICollection<Operation> Operations { get; set; } = new List<Operation>();
+        public virtual ICollection<Treatment> Treatments { get; set; } = new List<Treatment>();
+        public virtual ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
 
 
 

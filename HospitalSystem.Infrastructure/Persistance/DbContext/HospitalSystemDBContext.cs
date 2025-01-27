@@ -25,21 +25,60 @@ namespace HospitalSystem.Infrastructure.Persistance
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure Appointment-Doctor relationship
+            modelBuilder.Entity<Department>()
+                .HasOne(a => a.Hospital)
+                .WithMany(d => d.Departments)
+                .HasForeignKey(a => a.HospitalId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Doctor>()
+                .HasOne(a => a.MedicalSpeciality)
+                .WithMany(d => d.Doctors)
+                .HasForeignKey(a => a.MedicalSpecialityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
             modelBuilder.Entity<Appointment>()
                 .HasOne(a => a.Doctor)
                 .WithMany(d => d.Appointments) 
                 .HasForeignKey(a => a.DoctorId)
-                .OnDelete(DeleteBehavior.Restrict);  // Prevent cascading deletes
+                .OnDelete(DeleteBehavior.Cascade);
 
-            // Configure Appointment-Patient relationship
             modelBuilder.Entity<Appointment>()
                 .HasOne(a => a.Patient)
                 .WithMany(d => d.Appointments)
                 .HasForeignKey(a => a.PatientId)
-                .OnDelete(DeleteBehavior.Restrict);  // Prevent cascading deletes
+                .OnDelete(DeleteBehavior.Cascade);
 
- 
+            modelBuilder.Entity<Operation>()
+                .HasOne(a => a.Patient)
+                .WithMany(d => d.Operations)
+                .HasForeignKey(a => a.PatientId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Operation>()
+                .HasOne(a => a.Doctor)
+                .WithMany(d => d.Operations)
+                .HasForeignKey(a => a.DoctorId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Treatment>()
+                .HasOne(a => a.Patient)
+                .WithMany(d => d.Treatments)
+                .HasForeignKey(a => a.PatientId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Treatment>()
+                .HasOne(a => a.Doctor)
+                .WithMany(d => d.Treatments)
+                .HasForeignKey(a => a.DoctorId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Treatment>()
+                .HasOne(a => a.Appointment)
+                .WithOne(d => d.Treatment)
+                .HasForeignKey<Treatment>(a => a.AppointmentId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Patient>()
                 .Property(p => p.MedicalRecordNumber)

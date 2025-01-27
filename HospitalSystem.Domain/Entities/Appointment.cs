@@ -28,7 +28,8 @@ namespace HospitalSystem.Domain.Entities
         public bool IsDone { get; set; }
 
         public virtual Patient Patient { get; set; }  // Navigation property to Patient
-        public virtual Doctor Doctor { get; set; }    // Navigation property to Doctor
+        public virtual Doctor Doctor { get; set; } 
+        public virtual Treatment Treatment { get; set; }
 
 
     }

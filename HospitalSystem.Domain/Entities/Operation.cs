@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalSystem.Domain.Entities.People;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -24,5 +25,8 @@ namespace HospitalSystem.Domain.Entities
         [Column(TypeName = "nvarchar(200)")]
         public string? Description { get; set; }
         public bool IsDone { get; set; }
+
+        public virtual Patient Patient { get; set; }
+        public virtual Doctor Doctor { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using HospitalSystem.Domain.Entities.People;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HospitalSystem.Domain.Entities
@@ -11,5 +12,10 @@ namespace HospitalSystem.Domain.Entities
         [Required]
         [Column(TypeName = "nvarchar(50)")]
         public string Name { get; set; }
+
+        [Required]
+        public int HospitalId { get; set; }
+
+        public virtual Hospital Hospital { get; set; }
     }
 }
