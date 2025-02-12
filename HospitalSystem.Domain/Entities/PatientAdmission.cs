@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using HospitalSystem.Domain.Entities.People;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HospitalSystem.Domain.Entities
@@ -30,6 +31,13 @@ namespace HospitalSystem.Domain.Entities
         [Required]
         [DataType(DataType.Currency)]
         public Decimal Cost { get; set; }
+
+        public virtual Patient Patient { get; set; }  // Navigation property to Patient
+        public virtual Doctor Doctor { get; set; }
+
+        public virtual MedicalRecord MedicalRecord { get; set; }
+
+
     }
 
 }

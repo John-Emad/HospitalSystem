@@ -29,7 +29,7 @@ namespace HospitalSystem.Domain.Entities.People
         public virtual ICollection<Operation> Operations { get; set; } = new List<Operation>();
         public virtual ICollection<Treatment> Treatments { get; set; } = new List<Treatment>();
         public virtual ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
-
+        public virtual ICollection<PatientAdmission> PatientAdmissions { get; set; } = new List<PatientAdmission>();
 
 
     }

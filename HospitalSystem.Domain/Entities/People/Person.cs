@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HospitalSystem.Domain.Entities.persons
+namespace HospitalSystem.Domain.Entities.People
 {
     public class Person : IdentityUser
     {

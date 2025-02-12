@@ -31,6 +31,8 @@ namespace HospitalSystem.Domain.Entities
         public virtual Doctor Doctor { get; set; } 
         public virtual Treatment Treatment { get; set; }
 
+        public virtual MedicalRecord MedicalRecord { get; set; }
+
 
     }
 }
