@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using HospitalSystem.Domain.Entities.People;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HospitalSystem.Domain.Entities
 {
-    public class PatienBill
+    public class PatientBill
     {
         [Key]
         public int Id { get; set; }
@@ -21,5 +22,7 @@ namespace HospitalSystem.Domain.Entities
         [Required]
         [Column("Is Payed")]
         public  bool IsPayed { get; set; } = false;
+
+        public virtual Patient Patient { get; set; }
     }
 }

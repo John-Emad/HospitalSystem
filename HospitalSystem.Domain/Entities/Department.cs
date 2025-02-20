@@ -1,5 +1,4 @@
-﻿using HospitalSystem.Domain.Entities.People;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HospitalSystem.Domain.Entities

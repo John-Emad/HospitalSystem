@@ -17,6 +17,10 @@ namespace HospitalSystem.Domain.Entities.People
         [Column(TypeName = "nvarchar(50)")]
         public required string LastName { get; set; }
 
+        public int? DoctorId { get; set; }
+        public int? PatientId { get; set; }
+
+
         [PersonalData]
         [Required]
         public DateTime BirthDate { get; set; }

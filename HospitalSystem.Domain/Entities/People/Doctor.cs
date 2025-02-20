@@ -1,32 +1,28 @@
-﻿using HospitalSystem.Domain.Entities.persons;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+
 
 namespace HospitalSystem.Domain.Entities.People
 {
-    public class Doctor:Person
+    public class Doctor
     {
         [Key]
-        public int Id { get; set; }
+        public int DoctorId { get; set; }
 
         [Required]
         public int MedicalSpecialityId { get; set; }
-
         public required string Schedule { get; set; }
+
         [DataType(DataType.Currency)]
         public required decimal VisitPrice { get; set; }
+
         [DataType(DataType.Currency)]
         public required decimal FollowUpPrice { get; set; }
-        [DataType(DataType.Currency)]
 
+        [DataType(DataType.Currency)]
         public required decimal ImpatientVisitPrice { get; set; }
 
         public virtual MedicalSpeciality MedicalSpeciality { get; set; }
+        public virtual ICollection<Person> People { get; set; } = new List<Person>();
         public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
         public virtual ICollection<Operation> Operations { get; set; } = new List<Operation>();
         public virtual ICollection<Treatment> Treatments { get; set; } = new List<Treatment>();

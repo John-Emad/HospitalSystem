@@ -1,9 +1,4 @@
-﻿using HospitalSystem.Domain.Entities.persons;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HospitalSystem.Domain.Entities.People;
 
 namespace HospitalSystem.Application.Interfaces
 {

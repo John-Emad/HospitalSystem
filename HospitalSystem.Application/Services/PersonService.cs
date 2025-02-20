@@ -1,11 +1,6 @@
 ﻿using HospitalSystem.Application.Interfaces;
-using HospitalSystem.Domain.Entities.persons;
+using HospitalSystem.Domain.Entities.People;
 using HospitalSystem.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalSystem.Application
 {
@@ -22,6 +17,7 @@ namespace HospitalSystem.Application
         {           
             return _personRepository.CreateAsync(person);
         }
+
 
         public Task<Person?> DeleteByIdAsync(string id)
         {
@@ -41,6 +37,22 @@ namespace HospitalSystem.Application
         public Task<Person?> Update(Person person)
         {
             return _personRepository.Update(person);
+        }
+
+
+        Task<Person?> IPersonService.DeleteByIdAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<Person[]> IPersonService.GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<Person?> IPersonService.GetByIdAsync(string id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

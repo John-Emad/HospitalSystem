@@ -10,15 +10,12 @@ namespace HospitalSystem.Domain.Entities
         public int Id { get; set; }
 
         [Required]
-        [Column(TypeName = "Patient Id")]
         public int PatientId { get; set; }
 
         [Required]
-        [Column("Doctor Id")]
         public int DoctorId { get; set; }
 
         [Required]
-        [Column("Appointment Id")]
         public int AppointmentId { get; set; }
 
         [Required]
@@ -29,13 +26,11 @@ namespace HospitalSystem.Domain.Entities
 
         [Required]
         [DataType(DataType.Currency)]
-        [Column("Treatment Cost")]
         public Decimal TreatmentCost { get; set; }
 
         public virtual Patient Patient { get; set; }
         public virtual Doctor Doctor { get; set; }
         public virtual Appointment Appointment { get; set; }
-
         public virtual MedicalRecord MedicalRecord { get; set; }
 
 

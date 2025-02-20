@@ -1,10 +1,5 @@
 ﻿using HospitalSystem.Domain.Entities.People;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalSystem.Domain.Entities
 {
@@ -24,7 +19,6 @@ namespace HospitalSystem.Domain.Entities
         public int OperationId { get; set; }
         [Required]
         public  int AdmissionId { get; set; }
-
         public string? Diagnosis { get; set; }
         public string? Medication { get; set; }
         public string? Notes { get; set; }
@@ -33,11 +27,8 @@ namespace HospitalSystem.Domain.Entities
         public virtual Patient Patient { get; set; }
         public virtual Doctor Doctor { get; set; }
         public virtual Appointment Appointment { get; set; }
-
         public virtual Treatment Treatment { get; set; }
-
         public virtual Operation Operation { get; set; }
-
         public virtual PatientAdmission PatientAdmission { get; set; }
     }
 }
