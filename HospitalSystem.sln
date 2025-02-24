@@ -5,12 +5,14 @@ VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalSystem.Api", "HospitalSystem\HospitalSystem.Api.csproj", "{9B4C060A-70FB-44FB-AD38-4BD0F3244A2A}"
 	ProjectSection(ProjectDependencies) = postProject
-		{207EFDB6-82C1-4CB8-BEF4-355765DD1DF2} = {207EFDB6-82C1-4CB8-BEF4-355765DD1DF2}
 		{974D2C97-669B-48F1-8240-CD2752CB840C} = {974D2C97-669B-48F1-8240-CD2752CB840C}
 		{C9AB6B7E-9349-4F53-930F-314FD6966781} = {C9AB6B7E-9349-4F53-930F-314FD6966781}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalSystem.Infrastructure", "HospitalSystem.Infrastructure\HospitalSystem.Infrastructure.csproj", "{C9AB6B7E-9349-4F53-930F-314FD6966781}"
+	ProjectSection(ProjectDependencies) = postProject
+		{974D2C97-669B-48F1-8240-CD2752CB840C} = {974D2C97-669B-48F1-8240-CD2752CB840C}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalSystem.Application", "HospitalSystem.Application\HospitalSystem.Application.csproj", "{974D2C97-669B-48F1-8240-CD2752CB840C}"
 EndProject
