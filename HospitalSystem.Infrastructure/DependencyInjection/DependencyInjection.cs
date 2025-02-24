@@ -1,4 +1,5 @@
 ﻿using HospitalSystem.Application;
+using HospitalSystem.Application.Services;
 using HospitalSystem.Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +19,10 @@ namespace HospitalSystem.Infrastructure.DependencyInjection
             services.AddScoped<HospitalSystem.Application.Interfaces.IPersonService, PersonService>();
             services.AddScoped<HospitalSystem.Domain.Interfaces.IPersonRepository,
                 HospitalSystem.Infrastructure.Persistance.Repositories.PersonRepository>();
+
+            services.AddScoped<HospitalSystem.Application.Interfaces.ITokenService, TokenService>();
+            services.AddScoped<HospitalSystem.Domain.Interfaces.ITokenRepository,
+                HospitalSystem.Infrastructure.Persistance.Repositories.TokenRepository>();
 
             return services;
         }
