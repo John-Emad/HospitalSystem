@@ -7,9 +7,9 @@ namespace HospitalSystem.Infrastructure.Persistance
     public partial class HospitalSystemDBContext : DbContext
     {
         #region Constructors
-        public HospitalSystemDBContext(DbContextOptions<HospitalSystemDBContext> options):base(options)
+        public HospitalSystemDBContext(DbContextOptions<HospitalSystemDBContext> options) : base(options)
         {
-            
+
         }
         #endregion
 
@@ -47,12 +47,19 @@ namespace HospitalSystem.Infrastructure.Persistance
                 .WithMany(d => d.Doctors)
                 .HasForeignKey(a => a.MedicalSpecialityId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Doctor>()
+                .HasKey(s => s.DoctorId); // Primary Key
+
+            modelBuilder.Entity<Doctor>()
+                .Property(p => p.PersonId).IsUnicode();
+                //.HasAlternateKey(s => s.PersonId); // Unique Key
             #endregion
 
             #region Appointment DataSet (Entitiy) relations
             modelBuilder.Entity<Appointment>()
                 .HasOne(a => a.Doctor)
-                .WithMany(d => d.Appointments) 
+                .WithMany(d => d.Appointments)
                 .HasForeignKey(a => a.DoctorId)
                 .OnDelete(DeleteBehavior.Cascade);
 
@@ -99,8 +106,11 @@ namespace HospitalSystem.Infrastructure.Persistance
 
             #region Patient DataSet (Entitiy) relations
             modelBuilder.Entity<Patient>()
-                .Property(p => p.MedicalRecordNumber)
-                .HasMaxLength(50);
+                .HasKey(s => s.PatientId); // Primary Key
+
+            modelBuilder.Entity<Patient>()
+                .Property(p => p.PersonId).IsUnicode();
+                //.HasAlternateKey(s => s.PersonId); // Unique Key
             #endregion
 
             #region PatientAdmission DataSet (Entitiy) relations

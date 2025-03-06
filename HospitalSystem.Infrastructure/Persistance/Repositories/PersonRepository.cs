@@ -1,26 +1,66 @@
 ﻿using HospitalSystem.Domain.Entities.People;
 using HospitalSystem.Domain.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace HospitalSystem.Infrastructure.Persistance.Repositories
 {
     public class PersonRepository : IPersonRepository
     {
+        #region Fields
         private readonly HospitalSystemDBContext _hospitalSystemDBContext;
+        private readonly UserManager<Person> _userManager;
+        #endregion
 
-        public PersonRepository(HospitalSystemDBContext hospitalSystemDBContext)
+        #region Constructors
+        public PersonRepository(HospitalSystemDBContext hospitalSystemDBContext, UserManager<Person> userManager)
         {
-            this._hospitalSystemDBContext = hospitalSystemDBContext;
+            _hospitalSystemDBContext = hospitalSystemDBContext;
+            _userManager = userManager;
+        }
+        #endregion
+
+        #region Methods
+        public async Task<Person?> AddPersonAsync(Person person)
+        {
+            var result = await _userManager.CreateAsync(person, password: person.PasswordHash);
+
+            if (result.Succeeded)
+            {
+                return person;
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        public async Task<Person?> CreateAsync(Person person)
+        public async Task<Person?> UpdatePersonAsync(Person person)
         {
-            EntityEntry<Person> added = await _hospitalSystemDBContext.People.AddAsync(person);
-            int affected = await _hospitalSystemDBContext.SaveChangesAsync();
-            if (affected == 1)
+            _hospitalSystemDBContext.People.Update(person);
+            int affectedRows = await _hospitalSystemDBContext.SaveChangesAsync();
+            if (affectedRows > 0)
             {
-                // If saved to database then return
-                return person;
+                return person; // Return the updated person if the update was successful
+            }
+
+            return null; // Return null if no changes were made
+        }
+
+        public async Task<Person?> AssignPatientId(string personId, int patientId)
+        {
+            Person? result = await _hospitalSystemDBContext.People.FirstOrDefaultAsync(p => p.Id == personId);
+            if (result != null)
+            {
+                result.PatientId = patientId;
+                int affectedRows = await _hospitalSystemDBContext.SaveChangesAsync();
+
+                if (affectedRows > 0)
+                {
+                    return result;
+                }
+
             }
             return null;
         }
@@ -35,14 +75,15 @@ namespace HospitalSystem.Infrastructure.Persistance.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<Person?> GetByIdAsync(string id)
+        public async Task<Person?> GetByIdAsync(string id)
         {
-            throw new NotImplementedException();
+            Person? foundPerson = await _hospitalSystemDBContext.People.FirstOrDefaultAsync<Person>(p => p.Id == id);
+            if(foundPerson is null)
+            {
+                return null;
+            }
+            return foundPerson;
         }
-
-        public Task<Person?> Update(Person person)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
     }
 }

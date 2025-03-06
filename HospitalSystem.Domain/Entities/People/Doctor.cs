@@ -20,9 +20,10 @@ namespace HospitalSystem.Domain.Entities.People
 
         [DataType(DataType.Currency)]
         public required decimal ImpatientVisitPrice { get; set; }
-
         public virtual MedicalSpeciality MedicalSpeciality { get; set; }
-        public virtual ICollection<Person> People { get; set; } = new List<Person>();
+        public string PersonId{ get; set; }
+
+        // public virtual ICollection<Person> People { get; set; } = new List<Person>();
         public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
         public virtual ICollection<Operation> Operations { get; set; } = new List<Operation>();
         public virtual ICollection<Treatment> Treatments { get; set; } = new List<Treatment>();
@@ -30,6 +31,8 @@ namespace HospitalSystem.Domain.Entities.People
         public virtual ICollection<PatientAdmission> PatientAdmissions { get; set; } = new List<PatientAdmission>();
 
         public virtual ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
+
+
 
 
 
