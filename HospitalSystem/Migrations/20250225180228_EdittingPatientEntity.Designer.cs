@@ -4,6 +4,7 @@ using HospitalSystem.Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalSystem.Api.Migrations
 {
     [DbContext(typeof(HospitalSystemDBContext))]
-    partial class HospitalSystemDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250225180228_EdittingPatientEntity")]
+    partial class EdittingPatientEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -312,11 +315,6 @@ namespace HospitalSystem.Api.Migrations
                     b.Property<int>("MedicalSpecialityId")
                         .HasColumnType("int");
 
-                    b.Property<string>("PersonId")
-                        .IsRequired()
-                        .IsUnicode(true)
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Schedule")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -346,16 +344,11 @@ namespace HospitalSystem.Api.Migrations
                     b.Property<string>("InsuranceNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("LastVisitDate")
+                    b.Property<DateTime>("LastVisitDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("NextVisitDate")
+                    b.Property<DateTime>("NextVisitDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("PersonId")
-                        .IsRequired()
-                        .IsUnicode(true)
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
@@ -444,6 +437,10 @@ namespace HospitalSystem.Api.Migrations
                         .HasColumnName("User role");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
 
                     b.ToTable("People");
                 });
@@ -628,6 +625,17 @@ namespace HospitalSystem.Api.Migrations
                     b.Navigation("MedicalSpeciality");
                 });
 
+            modelBuilder.Entity("HospitalSystem.Domain.Entities.People.Person", b =>
+                {
+                    b.HasOne("HospitalSystem.Domain.Entities.People.Doctor", null)
+                        .WithMany("People")
+                        .HasForeignKey("DoctorId");
+
+                    b.HasOne("HospitalSystem.Domain.Entities.People.Patient", null)
+                        .WithMany("People")
+                        .HasForeignKey("PatientId");
+                });
+
             modelBuilder.Entity("HospitalSystem.Domain.Entities.Treatment", b =>
                 {
                     b.HasOne("HospitalSystem.Domain.Entities.Appointment", "Appointment")
@@ -696,6 +704,8 @@ namespace HospitalSystem.Api.Migrations
 
                     b.Navigation("PatientAdmissions");
 
+                    b.Navigation("People");
+
                     b.Navigation("Treatments");
                 });
 
@@ -710,6 +720,8 @@ namespace HospitalSystem.Api.Migrations
                     b.Navigation("PatientAdmissions");
 
                     b.Navigation("PatientBills");
+
+                    b.Navigation("People");
 
                     b.Navigation("Treatments");
                 });

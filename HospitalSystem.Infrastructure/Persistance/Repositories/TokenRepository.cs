@@ -1,6 +1,7 @@
 ﻿using HospitalSystem.Domain.Entities;
 using HospitalSystem.Domain.Entities.People;
 using HospitalSystem.Domain.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,39 +16,49 @@ namespace HospitalSystem.Infrastructure.Persistance.Repositories
         #region Fields
         private readonly IConfiguration _configuration;
         private readonly HospitalSystemDBContext _hospitalSystemDBContext;
+        private readonly UserManager<Person> _userManager;
         #endregion
 
         #region Constructors
-        public TokenRepository(IConfiguration configuration, HospitalSystemDBContext hospitalSystemDBContext)
+        public TokenRepository(IConfiguration configuration,
+            HospitalSystemDBContext hospitalSystemDBContext,
+            UserManager<Person> userManager)
         {
             _configuration = configuration;
             _hospitalSystemDBContext = hospitalSystemDBContext;
+            _userManager = userManager;
         }
         #endregion
 
         #region Methods
-        public Tokens Authenticate(Person person)
+        public async Task<Tokens?> AuthenticateAsync(string Email, string Password)
         {
-            if (!_hospitalSystemDBContext.People.Any(x => x.Email == person.Email && x.PasswordHash == person.PasswordHash))
-            {
-                return null;
-            }
+            var result = await _userManager.FindByEmailAsync(Email);
 
-            //We have Authenticated
-            //Generate JSON Web Token
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenKey = Encoding.UTF8.GetBytes(_configuration["JWT:devKey"]);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            if (result is not null && await _userManager.CheckPasswordAsync(result, Password))
             {
-                Subject = new ClaimsIdentity(new Claim[]
-              {
-             new Claim(ClaimTypes.Name, person.Email)
-              }),
-                Expires = DateTime.UtcNow.AddMinutes(10),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return new Tokens { Token = tokenHandler.WriteToken(token) };
+                // We have Authenticated
+                //Generate JSON Web Token
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var tokenKey = Encoding.UTF8.GetBytes(_configuration["JWT:devKey"]);
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                        new Claim(ClaimTypes.Name, Email)
+                    }),
+                    Expires = DateTime.UtcNow.AddMinutes(10),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
+                };
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                return new Tokens { Token = tokenHandler.WriteToken(token) };
+            }
+            //if (!_hospitalSystemDBContext.People.Any(x => x.Email == Email && x.PasswordHash == Password))
+            //{
+            //    return null;
+            //}
+            return null;
+
         }
         #endregion
     }

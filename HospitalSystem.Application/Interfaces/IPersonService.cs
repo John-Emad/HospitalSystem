@@ -4,10 +4,11 @@ namespace HospitalSystem.Application.Interfaces
 {
     public interface IPersonService
     {
-        Task<Person?> CreateAsync(Person person);
+        Task<Person?> AddPersonAsync(Person person);
+        Task<Person?> UpdatePersonAsync(Person person);
+        Task<Person?> AssignPatientId(string personId, int patientId);
         Task<Person?> GetByIdAsync(string id);
-        Task<Person[]> GetAllAsync();
-        Task<Person?> Update(Person person);
+        Task<Person[]> GetAllPeopleAsync();
         Task<Person?> DeleteByIdAsync(string id);
     }
 }

@@ -6,53 +6,56 @@ namespace HospitalSystem.Application
 {
     public class PersonService : IPersonService
     {
+        #region Fields
         private readonly IPersonRepository _personRepository;
+        #endregion
 
+        #region Constructors
         public PersonService(IPersonRepository personRepository)
         {
             _personRepository = personRepository;
         }
+        #endregion
 
-        public Task<Person?> CreateAsync(Person person)
-        {           
-            return _personRepository.CreateAsync(person);
+        #region Methods
+        public async Task<Person?> AddPersonAsync(Person person)
+        {
+            Person? AddedPerson = await _personRepository.AddPersonAsync(person);
+            if (AddedPerson is null)
+            {
+                return null;
+            }
+            return AddedPerson;
         }
 
+        public Task<Person?> UpdatePersonAsync(Person person)
+        {
+            return _personRepository.UpdatePersonAsync(person);
+        }
+
+        public Task<Person?> AssignPatientId(string personId, int patientId)
+        {
+            return _personRepository.AssignPatientId(personId, patientId);
+        }
 
         public Task<Person?> DeleteByIdAsync(string id)
         {
             return _personRepository.DeleteByIdAsync(id);
         }
 
-        public Task<Person[]> GetAllAsync()
-        {
-            return _personRepository.GetAllAsync();
-        }
-
         public Task<Person?> GetByIdAsync(string id)
         {
             return _personRepository.GetByIdAsync(id);
         }
-
-        public Task<Person?> Update(Person person)
-        {
-            return _personRepository.Update(person);
-        }
-
-
-        Task<Person?> IPersonService.DeleteByIdAsync(string id)
+        public Task<Person[]> GetAllPeopleAsync()
         {
             throw new NotImplementedException();
         }
 
-        Task<Person[]> IPersonService.GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
 
-        Task<Person?> IPersonService.GetByIdAsync(string id)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
+
+
+
     }
 }

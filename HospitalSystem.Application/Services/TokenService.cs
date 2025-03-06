@@ -4,5 +4,6 @@ namespace HospitalSystem.Application.Services
 {
     public class TokenService : ITokenService
     {
+
     }
 }

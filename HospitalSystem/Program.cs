@@ -1,18 +1,19 @@
-using HospitalSystem.Infrastructure.DependencyInjection;
+using HospitalSystem.Application;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using HospitalSystem.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Infastructure Dependency Injection 
-builder.Services.ImplementPersistance(builder.Configuration);
+// Dependency Injection 
+builder.Services.InjectingApplicationDependencies();
+builder.Services.InjectingInfrastructureDependencies(builder.Configuration);
 
 //Adding JWT to the DI Container
 builder.Services.AddAuthentication(x =>
